@@ -5,9 +5,7 @@
     let lastX;
     let lastY;
     let mousePressed = false;
-    const submitBtn = document.getElementById('submitBtn');
     const signInput = document.getElementById('signInput');
-    const inputs = document.getElementsByTagName('input');
 
     //Events
     drawBox.addEventListener('mousedown', e => {
@@ -29,10 +27,6 @@
         mousePressed = false;
     });
 
-    submitBtn.addEventListener('click', () => {
-        inputValidator();
-    });
-
     const draw = (x, y, mouseDown) => {
         if(mouseDown) {
             context.strokeStyle = 'white';
@@ -47,15 +41,6 @@
         }
         lastX = x;
         lastY = y;
-    };
-
-    const inputValidator = () => {
-        for(let i = 0; i < inputs.length; i++) {
-            if(inputs[i].validity.valid == false) {
-                alert('Sth went wrong');
-                break;
-            }
-        }
     };
 
 })();
