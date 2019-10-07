@@ -20,5 +20,6 @@
 
 -- SELECT * FROM petition;
 SELECT COUNT(*) AS NUMBEROFSIGNERS FROM petition;
+SELECT FIRSTNAME, LASTNAME FROM petition;
 
 -- DELETE FROM petition;

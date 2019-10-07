@@ -5,18 +5,13 @@ const cookieParser = require('cookie-parser');
 const spicedPg = require('spiced-pg');
 let db = spicedPg('postgres:postgres:12345@localhost:5432/petition');
 
-app.use(
-    cookieParser()
-);
-
+app.use(cookieParser());
 
 app.engine('handlebars', hb());
 app.set('view engine', 'handlebars');
 
 app.use(express.static('./public'));
-app.use(express.urlencoded( { extended: false} ));
-
-
+app.use(express.urlencoded({extended: false}));
 
 //Routes
 // 1
@@ -37,7 +32,7 @@ app.get('/petition', (req, res) => {
 app.get('/thanks', (req, res) => {
     return db.query(
         `SELECT COUNT(*) AS NUMBEROFSIGNERS FROM petition;`
-    ).then((result) => {
+    ).then(result => {
         res.render('thanks', {signers: result.rows[0].numberofsigners});
     }).catch(err => {
         console.error(err);
@@ -46,7 +41,13 @@ app.get('/thanks', (req, res) => {
 
 // 4
 app.get('/signers', (req, res) => {
-    res.render('thanks');
+    return db.query(
+        `SELECT FIRSTNAME, LASTNAME FROM petition;`
+    ).then( ({ rows }) => {
+        res.render('signers', {signersList: rows});
+    }).catch(err => {
+        console.error(err);
+    });
 });
 
 // 5
