@@ -10,4 +10,14 @@ body {
 
 #canv {
     background-color: black;
+    display: block;
+    margin: auto;
+}
+
+input {
+    margin: 10px 10px;
+}
+
+#signInput {
+    display: none;
 }
