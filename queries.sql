@@ -19,10 +19,10 @@
 
 
 -- SELECT * FROM petition;
-SELECT * FROM users;
+-- SELECT * FROM users;
 
 -- SELECT COUNT(*) AS NUMBEROFSIGNERS FROM petition;
--- SELECT FIRSTNAME, LASTNAME, TIMESTAMP FROM petition;
+SELECT FIRSTNAME, LASTNAME, TIMESTAMP FROM petition;
 
 -- DELETE FROM petition;
 
@@ -30,7 +30,7 @@ SELECT * FROM users;
 -- SELECT COUNT(*) FROM petition;
 -- SELECT SIGNATURE FROM petition WHERE id = 2;
 
--- 
+--
 -- CREATE TABLE USERS (
 --    id SERIAL primary key,
 --    firstname VARCHAR(255) NOT NULL,
