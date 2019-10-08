@@ -1,5 +1,5 @@
 -- SELECT * FROM petition
--- DELETE FROM petition WHERE firstname = 'majid';
+-- DELETE FROM petition WHERE firstname = 'Majid';
 -- SELECT * FROM petition;
 -- ALTER SEQUENCE petition_id_seq RESTART WITH 1;
 
@@ -20,10 +20,10 @@
 
 -- SELECT * FROM petition;
 -- SELECT COUNT(*) AS NUMBEROFSIGNERS FROM petition;
--- SELECT FIRSTNAME, LASTNAME FROM petition;
+SELECT FIRSTNAME, LASTNAME FROM petition;
 
 -- DELETE FROM petition;
 
 
 -- SELECT COUNT(*) FROM petition;
-SELECT SIGNATURE FROM petition WHERE id = 2;
+-- SELECT SIGNATURE FROM petition WHERE id = 2;

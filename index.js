@@ -13,19 +13,28 @@ app.set('view engine', 'handlebars');
 app.use(express.static('./public'));
 app.use(express.urlencoded({extended: false}));
 
+app.use(
+    (req, res, next) => {
+        if (!req.cookies.signed) {
+            if(req.url != '/petition') {
+                return res.redirect('/petition');
+            } else {
+                return next();
+            }
+        }
+        return next();
+    }
+);
+
 //Routes
 // 1
 app.get('/', (req, res) => {
-    if(req.cookies.signed) {
-        res.redirect('thanks');
-    } else {
-        res.redirect('/petition');
-    }
+    req.cookies.signed ? res.redirect('thanks') : res.redirect('/petition');
 });
 
 // 2
 app.get('/petition', (req, res) => {
-    res.render('petition');
+    req.cookies.signed ? res.redirect('thanks') : res.render('petition');
 });
 
 // 3
