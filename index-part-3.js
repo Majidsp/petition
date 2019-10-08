@@ -3,8 +3,12 @@ const app = express();
 const hb = require('express-handlebars');
 const cookieSession = require('cookie-session');
 const csurf = require('csurf');
+const helmet = require('helmet');
 const spicedPg = require('spiced-pg');
 let db = spicedPg('postgres:postgres:12345@localhost:5432/petition');
+
+//Middleware for helmet
+app.use(helmet());
 
 //Middleware for cookieSession
 app.use(cookieSession({
@@ -22,12 +26,15 @@ app.use(express.static('./public'));
 //Middleware for parsing request body
 app.use(express.urlencoded({extended: false}));
 
-//Middleware for csurf
+//Middleware for csurf and securing against iframes
 app.use(csurf());
 app.use(function(req, res, next) {
+    //iframes
+    res.set("x-frame-options", "DENY");
+    //
     res.locals.csrfToken = req.csrfToken();
     next();
-}); 
+});
 
 //Middleware for blocking access to users that have not signed the petition
 app.use(
