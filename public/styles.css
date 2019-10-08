@@ -21,3 +21,7 @@ input {
 #signInput {
     display: none;
 }
+
+.signBoxShow {
+    background-color: black;
+}
