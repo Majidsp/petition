@@ -1,0 +1,13 @@
+<div class="content">
+    <img src="assets/logo.png" alt="logo!">
+    <h3>Please log in!</h3>
+    {{#if error}}
+        <p>Something went wrong please try again!</p>
+    {{/if}}
+    <form action="/petition" method="POST">
+        <input type="email" name="email" placeholder="Your email address..." autocomplete="off">
+        <input type="password" name="password" placeholder="Your password..." autocomplete="off">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button id="submitBtn" type="submit">Log in</button>
+    </form>
+</div>
