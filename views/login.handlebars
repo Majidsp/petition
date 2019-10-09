@@ -4,7 +4,7 @@
     {{#if error}}
         <p class="err">Something went wrong please try again!</p>
     {{/if}}
-    <form action="/petition" method="POST">
+    <form action="/login" method="POST">
         <input type="email" name="email" placeholder="Your email address..." autocomplete="off">
         <input type="password" name="password" placeholder="Your password..." autocomplete="off">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">

@@ -39,34 +39,25 @@ app.use(function(req, res, next) {
 });
 
 //Middleware for blocking access to users that have not signed the petition
-app.use(
-    (req, res, next) => {
-        if (!req.session.id) {
-            if(req.url != '/petition') {
-                return res.redirect('/petition');
-            } else {
-                return next();
-            }
-        }
-        return next();
-    }
-);
+// app.use(
+//     (req, res, next) => {
+//         if (!req.session.id) {
+//             if(req.url != '/petition') {
+//                 return res.redirect('/petition');
+//             } else {
+//                 return next();
+//             }
+//         }
+//         return next();
+//     }
+// );
 
-
-
-// let comparing = () => {
-//     toHash('okay').then( result => toCompare('okay', result)
-//     ).then( result => console.log(result)
-//     );
-// };
-//
-// comparing();
-
-//Routes
+//1
 app.get('/signup', (req, res) => {
     res.render('signup');
 });
 
+//2
 app.post('/signup', (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
@@ -76,29 +67,66 @@ app.post('/signup', (req, res) => {
         toHash(password)
             .then( result => signUp(firstName, lastName, email, result)
             ).then( ({ rows }) => {
-                req.session.id = rows[0].email;
+                req.session.userId = rows[0].id;
                 res.redirect('/logIn');
             }
             ).catch(() => res.render('signup', {error: true}));
     }
 });
 
+//3
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+//4
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    console.log(email , password);
+    return logIn(email)
+        .then(({ rows }) => toCompare(password, rows[0].password))
+        .then(result => result ? res.redirect('/petition') : res.render('login', {error: true})
+        ).catch(err => console.log(err));
+});
 
 
 
-// 1
+// 5
 app.get('/', (req, res) => {
-    req.session.id ? res.redirect('thanks') : res.redirect('/petition');
+    req.session.sign ? res.redirect('thanks') : res.redirect('/petition');
 });
 
-// 2
+
+// 6
 app.get('/petition', (req, res) => {
-    req.session.id ? res.redirect('thanks') : res.render('petition');
+    req.session.sign ? res.redirect('thanks') : res.render('petition');
 });
 
-// 3
+
+// 7
+app.post('/petition', (req, res) => {
+
+    const { firstName, lastName, signature } = req.body;
+
+    if(!firstName || !lastName || !signature){
+        res.render('petition', {error: true});
+    } else {
+        enterInfo(req.body.firstName, req.body.lastName, req.body.signature, req.session.userId)
+            .then(() => {
+                req.session.sign = true;
+                res.redirect('/thanks');
+            }).catch(() => {
+                res.render('petition', {error: true});
+            });
+    }
+
+});
+
+
+// 8
 app.get('/thanks', (req, res) => {
-    let id = req.session.id;
+    let id = req.session.userId;
+    console.log(id);
     let numberOfSigners = 0;
     return countSigners()
         .then(({ rows }) => {
@@ -111,7 +139,8 @@ app.get('/thanks', (req, res) => {
         });
 });
 
-// 4
+
+// 9
 app.get('/signers', (req, res) => {
     return listOfSigners()
         .then( ({ rows }) => {
@@ -121,24 +150,7 @@ app.get('/signers', (req, res) => {
         });
 });
 
-// 5
-app.post('/petition', (req, res) => {
 
-    const { firstName, lastName, signature } = req.body;
-
-    if(!firstName || !lastName || !signature){
-        res.render('petition', {error: true});
-    } else {
-        enterInfo(req.body.firstName, req.body.lastName, req.body.signature)
-            .then(({ rows }) => {
-                req.session.id = rows[0].id;
-                res.redirect('/thanks');
-            }).catch(() => {
-                res.render('petition', {error: true});
-            });
-    }
-
-});
 
 
 

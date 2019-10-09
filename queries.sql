@@ -1,7 +1,18 @@
 -- SELECT * FROM petition
--- DELETE FROM petition WHERE firstname = 'Majid';
--- SELECT * FROM petition;
--- ALTER SEQUENCE petition_id_seq RESTART WITH 1;
+-- DELETE FROM users WHERE firstname = 'Majid';
+-- ALTER SEQUENCE users_id_seq RESTART WITH 1;
+-- DELETE FROM signatures WHERE firstname = 'Majid';
+-- ALTER SEQUENCE users_id_seq RESTART WITH 1;
+--
+--
+-- SELECT * FROM users;
+-- SELECT * FROM signatures;
+
+SELECT * FROM users;
+-- SELECT * FROM signatures;
+
+
+
 
 
 -- ALTER TABLE petition DROP COLUMN timestamp;
@@ -31,13 +42,14 @@
 -- SELECT SIGNATURE FROM petition WHERE id = 2;
 
 --
--- CREATE TABLE USERS (
+-- CREATE TABLE SIGNATURES (
 --    id SERIAL primary key,
 --    firstname VARCHAR(255) NOT NULL,
 --    lastname VARCHAR(255) NOT NULL,
---    email VARCHAR(255) NOT NULL UNIQUE,
---    password VARCHAR(255) NOT NULL,
+--    signature VARCHAR NOT NULL,
 --    timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 -- );
+-- user_id INT REFERENCES users(id) NOT NULL UNIQUE,
+
 
 -- DROP TABLE users;
