@@ -87,7 +87,6 @@ app.get('/login', (req, res) => {
 //4
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
-    console.log(email , password);
     return logIn(email)
         .then(({ rows }) => toCompare(password, rows[0].password))
         .then(result => result ? res.redirect('/petition') : res.render('login', {error: true})
@@ -131,7 +130,6 @@ app.post('/petition', (req, res) => {
 // 8
 app.get('/thanks', (req, res) => {
     let id = req.session.userId;
-    console.log(id);
     let numberOfSigners = 0;
     return countSigners()
         .then(({ rows }) => {

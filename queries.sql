@@ -9,8 +9,8 @@
 -- SELECT * FROM signatures;
 -- ALTER TABLE signatures DROP COLUMN lastname;
 --
--- SELECT * FROM users;
--- SELECT * FROM signatures;
+SELECT * FROM users;
+SELECT id, user_id, timestamp FROM signatures;
 
 SELECT FIRSTNAME, LASTNAME FROM users JOIN signatures ON users.id = signatures.user_id;
 
