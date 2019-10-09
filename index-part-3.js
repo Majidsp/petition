@@ -4,7 +4,7 @@ const hb = require('express-handlebars');
 const cookieSession = require('cookie-session');
 const csurf = require('csurf');
 const helmet = require('helmet');
-const { enterInfo, countSigners, getSignature, listOfSigners, signUp, logIn } = require('./db');
+const { enterInfo, countSigners, getSignature, listOfSigners, signUp, logIn, checkIfSigned } = require('./db');
 const { toHash, toCompare } = require('./encode');
 
 //Do not forget to secure against this
@@ -86,10 +86,17 @@ app.post('/login', (req, res) => {
             if(result) {
                 req.session.name = name;
                 req.session.id = id;
-                res.redirect('/petition');
+                return checkIfSigned(id);
             } else {
                 res.render('login', {error: true});
             }
+        }
+        ).then( ({ rows }) => {
+            if(rows[0].user_id) {
+                req.session.sign = true;
+            }
+
+            res.redirect('/petition');
         }
         ).catch(err => console.log(err));
 });

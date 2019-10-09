@@ -8,6 +8,14 @@
 SELECT * FROM users;
 SELECT id, user_id FROM signatures;
 
+-- CREATE TABLE user_profiles(
+--     id SERIAL PRIMARY KEY,
+--     age INT,
+--     city VARCHAR,
+--     url VARCHAR,
+--     user_id INT REFERENCES users(id) NOT NULL UNIQUE
+-- );
+
 -- ALTER TABLE signatures DROP COLUMN lastname;
 --
 -- SELECT * FROM users;

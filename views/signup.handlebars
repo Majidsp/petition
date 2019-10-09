@@ -1,8 +1,8 @@
 <div class="content">
-    <img src="assets/logo.png" alt="logo!">
+    {{> logo}}
     <h3>A world without Crocs is within reach but we won't get there without your support.<br>Join our campaign today!</h3>
     {{#if error}}
-        <p class="err">Something went wrong please try again!</p>
+        {{> error}}
     {{/if}}
     <form action="/signup" method="POST">
         <input type="text" name="firstName"  placeholder="Your name..." autocomplete="off">

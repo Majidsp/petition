@@ -36,12 +36,20 @@ const signUp = (firstname, lastname, emailaddress, password) => {
     );
 };
 
-const logIn = (emailaddress) => {
+const logIn = emailaddress => {
     return db.query(
         `SELECT id, firstname, password FROM users WHERE email = $1;`,
         [emailaddress]
     );
 };
+
+const checkIfSigned = id => {
+    return db.query(
+        `SELECT user_id FROM signatures WHERE user_id = $1;`,
+        [id]
+    );
+};
+
 
 module.exports = {
     enterInfo: enterInfo,
@@ -49,5 +57,6 @@ module.exports = {
     getSignature: getSignature,
     listOfSigners: listOfSigners,
     signUp: signUp,
-    logIn: logIn
+    logIn: logIn,
+    checkIfSigned: checkIfSigned
 };

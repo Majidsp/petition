@@ -1,8 +1,8 @@
 <div class="content">
-    <img src="assets/logo.png" alt="logo!">
+    {{> logo}}
     <h3>Please log in!</h3>
     {{#if error}}
-        <p class="err">Something went wrong please try again!</p>
+        {{> error}}
     {{/if}}
     <form action="/login" method="POST">
         <input type="email" name="email" placeholder="Your email address..." autocomplete="off">
