@@ -2,11 +2,11 @@ const spicedPg = require('spiced-pg');
 let db = spicedPg('postgres:postgres:12345@localhost:5432/petition');
 
 
-const enterInfo = (firstname, lastname, signature, userId) => {
+const enterInfo = (signature, userId) => {
     return db.query(
-        `INSERT INTO signatures  (firstname, lastname, signature, user_id)
-        VALUES ($1, $2, $3, (select id from users where id = $4)) RETURNING id`,
-        [firstname, lastname, signature, userId]
+        `INSERT INTO signatures  (signature, user_id)
+        VALUES ($1, (select id from users where id = $2)) RETURNING id`,
+        [signature, userId]
     );
 };
 
@@ -25,7 +25,9 @@ const getSignature = id => {
 
 const listOfSigners = () => {
     return db.query(
-        `SELECT FIRSTNAME, LASTNAME FROM signatures ;`
+        // `SELECT FIRSTNAME, LASTNAME FROM signatures ;`
+        `SELECT FIRSTNAME, LASTNAME FROM users LEFT JOIN signatures ON users.id = signatures.user_id;`,
+
     );
 };
 

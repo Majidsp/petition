@@ -4,8 +4,13 @@ const hb = require('express-handlebars');
 const cookieSession = require('cookie-session');
 const csurf = require('csurf');
 const helmet = require('helmet');
-const { enterInfo, countSigners, getSignature, listOfSigners, signUp, logIn} = require('./db');
+const { enterInfo, countSigners, getSignature, listOfSigners, signUp, logIn } = require('./db');
 const { toHash, toCompare } = require('./encode');
+
+//Do not forget to secure against this
+// const filterUrl = url => {
+//     return url.search(/https|http|\/\//i) === 0 ? url : null;
+// };
 
 
 //Middleware for helmet
@@ -106,12 +111,12 @@ app.get('/petition', (req, res) => {
 // 7
 app.post('/petition', (req, res) => {
 
-    const { firstName, lastName, signature } = req.body;
+    const { signature } = req.body;
 
-    if(!firstName || !lastName || !signature){
+    if(!signature){
         res.render('petition', {error: true});
     } else {
-        enterInfo(req.body.firstName, req.body.lastName, req.body.signature, req.session.userId)
+        enterInfo(signature, req.session.userId)
             .then(() => {
                 req.session.sign = true;
                 res.redirect('/thanks');

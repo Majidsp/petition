@@ -7,17 +7,19 @@
 --
 -- SELECT * FROM users;
 -- SELECT * FROM signatures;
-
-SELECT * FROM users;
+-- ALTER TABLE signatures DROP COLUMN lastname;
+--
+-- SELECT * FROM users;
 -- SELECT * FROM signatures;
 
+SELECT FIRSTNAME, LASTNAME FROM users JOIN signatures ON users.id = signatures.user_id;
 
 
 
 
 -- ALTER TABLE petition DROP COLUMN timestamp;
 -- ALTER TABLE petition ADD COLUMN timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP;
--- ALTER TABLE petition DROP COLUMN firstname;
+-- ALTER TABLE signatures DROP COLUMN firstname;
 -- ALTER TABLE petition DROP COLUMN lastname;
 -- ALTER TABLE petition DROP COLUMN signature;
 -- ALTER TABLE petition DROP COLUMN timestamp;
