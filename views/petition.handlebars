@@ -2,7 +2,7 @@
     <h2>Sign our petition to make the wearing of Crocs in public places a criminal act in every jurisdiction!</h2>
     <img src="assets/logo.png" alt="logo!">
     {{#if error}}
-        <p>Something went wrong please try again!</p>
+        <p class="err">Something went wrong please try again!</p>
     {{/if}}
     <form action="/petition" method="POST">
         <input type="text" name="firstName"  placeholder="Your name..." autocomplete="off">

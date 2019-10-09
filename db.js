@@ -1,11 +1,11 @@
 const spicedPg = require('spiced-pg');
 let db = spicedPg('postgres:postgres:12345@localhost:5432/petition');
 
+
 const enterInfo = (firstname, lastname, signature) => {
     return db.query(
         `INSERT INTO petition (firstname, lastname, signature) VALUES ($1, $2, $3) RETURNING id`,
         [firstname, lastname, signature]
-        // [req.body.firstName, req.body.lastName, req.body.signature]
     );
 };
 
@@ -28,9 +28,25 @@ const listOfSigners = () => {
     );
 };
 
+const signUp = (firstname, lastname, emailaddress, password) => {
+    return db.query(
+        `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING id;`,
+        [firstname, lastname, emailaddress, password]
+    );
+};
+
+const logIn = (emailaddress) => {
+    return db(
+        `SELECT password FROM users WHERE email = $1;`,
+        [emailaddress]
+    );
+};
+
 module.exports = {
     enterInfo: enterInfo,
     countSigners: countSigners,
     getSignature: getSignature,
-    listOfSigners: listOfSigners
+    listOfSigners: listOfSigners,
+    signUp: signUp,
+    logIn: logIn
 };

@@ -4,7 +4,7 @@ const hb = require('express-handlebars');
 const cookieSession = require('cookie-session');
 const csurf = require('csurf');
 const helmet = require('helmet');
-const { enterInfo, countSigners, getSignature, listOfSigners} = require('./db');
+const { enterInfo, countSigners, getSignature, listOfSigners, signUp, logIn} = require('./db');
 const { toHash, toCompare } = require('./encode');
 
 
@@ -63,6 +63,29 @@ app.use(
 // comparing();
 
 //Routes
+app.get('/signup', (req, res) => {
+    res.render('signup');
+});
+
+app.post('/signup', (req, res) => {
+    const { firstName, lastName, email, password } = req.body;
+
+    if(!firstName || !lastName || !email || !password) {
+        res.render('signup', {error: true});
+    } else {
+        toHash(password)
+            .then( result => signUp(firstName, lastName, email, result)
+            ).then( ({ rows }) => {
+                req.session.id = rows[0].email;
+                res.redirect('/logIn');
+            }
+            ).catch(() => res.render('signup', {error: true}));
+    }
+});
+
+
+
+
 // 1
 app.get('/', (req, res) => {
     req.session.id ? res.redirect('thanks') : res.redirect('/petition');
