@@ -1,7 +1,7 @@
 -- SELECT * FROM petition
 -- DELETE FROM users WHERE firstname = 'Majid';
 -- ALTER SEQUENCE users_id_seq RESTART WITH 1;
--- DELETE FROM signatures WHERE firstname = 'Majid';
+-- DELETE FROM signatures WHERE user_id = 2;
 -- ALTER SEQUENCE users_id_seq RESTART WITH 1;
 --
 --
@@ -9,8 +9,8 @@
 -- SELECT * FROM signatures;
 -- ALTER TABLE signatures DROP COLUMN lastname;
 --
-SELECT * FROM users;
-SELECT id, user_id, timestamp FROM signatures;
+-- SELECT * FROM users;
+-- SELECT id, user_id, timestamp FROM signatures;
 
 SELECT FIRSTNAME, LASTNAME FROM users JOIN signatures ON users.id = signatures.user_id;
 

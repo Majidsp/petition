@@ -25,7 +25,7 @@ const getSignature = id => {
 
 const listOfSigners = () => {
     return db.query(
-        `SELECT firstname, lastname FROM users LEFT JOIN signatures ON users.id = signatures.user_id;`,
+        `SELECT firstname, lastname FROM users JOIN signatures ON users.id = signatures.user_id;`,
 
     );
 };

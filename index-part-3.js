@@ -44,18 +44,18 @@ app.use(function(req, res, next) {
 });
 
 //Middleware for blocking access to users that have not signed the petition
-// app.use(
-//     (req, res, next) => {
-//         if (!req.session.id) {
-//             if(req.url != '/petition') {
-//                 return res.redirect('/petition');
-//             } else {
-//                 return next();
-//             }
-//         }
-//         return next();
-//     }
-// );
+app.use(
+    (req, res, next) => {
+        if (!req.session.userId) {
+            if(req.url == '/login') {
+                return next();
+            } else {
+                return res.redirect('/signup');
+            }
+        }
+        return next();
+    }
+);
 
 //1
 app.get('/signup', (req, res) => {
