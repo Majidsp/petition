@@ -43,19 +43,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-//Middleware for blocking access to users that have not signed the petition
-app.use(
-    (req, res, next) => {
-        if (!req.session.userId) {
-            if(req.url == '/login') {
-                return next();
-            } else {
-                return res.redirect('/signup');
-            }
-        }
-        return next();
-    }
-);
 
 //1
 app.get('/signup', (req, res) => {
@@ -72,8 +59,9 @@ app.post('/signup', (req, res) => {
         toHash(password)
             .then( result => signUp(firstName, lastName, email, result)
             ).then( ({ rows }) => {
-                req.session.userId = rows[0].id;
-                res.redirect('/logIn');
+                req.session.name = rows[0].firstname;
+                req.session.id = rows[0].id;
+                res.redirect('/login');
             }
             ).catch(() => res.render('signup', {error: true}));
     }
@@ -81,41 +69,55 @@ app.post('/signup', (req, res) => {
 
 //3
 app.get('/login', (req, res) => {
-    res.render('login');
+    req.session.name ? res.redirect('/petition') : res.render('login');
 });
 
 //4
 app.post('/login', (req, res) => {
+    let name, id;
     const { email, password } = req.body;
     return logIn(email)
-        .then(({ rows }) => toCompare(password, rows[0].password))
-        .then(result => result ? res.redirect('/petition') : res.render('login', {error: true})
+        .then(({ rows }) => {
+            name = rows[0].firstname;
+            id = rows[0].id;
+            return toCompare(password, rows[0].password);
+        }
+        ).then(result => {
+            if(result) {
+                req.session.name = name;
+                req.session.id = id;
+                res.redirect('/petition');
+            } else {
+                res.render('login', {error: true});
+            }
+        }
         ).catch(err => console.log(err));
 });
 
-
-
 // 5
 app.get('/', (req, res) => {
-    req.session.sign ? res.redirect('thanks') : res.redirect('/petition');
+    req.session.name ? res.redirect('/petition') : res.redirect('/signup');
 });
 
 
 // 6
 app.get('/petition', (req, res) => {
-    req.session.sign ? res.redirect('thanks') : res.render('petition');
+    if(req.session.name) {
+        req.session.sign ? res.redirect('/thanks') : res.render('petition');
+    } else {
+        res.redirect('/signup');
+    }
 });
 
 
 // 7
 app.post('/petition', (req, res) => {
-
     const { signature } = req.body;
 
     if(!signature){
         res.render('petition', {error: true});
     } else {
-        enterInfo(signature, req.session.userId)
+        enterInfo(signature, req.session.id)
             .then(() => {
                 req.session.sign = true;
                 res.redirect('/thanks');
@@ -129,32 +131,47 @@ app.post('/petition', (req, res) => {
 
 // 8
 app.get('/thanks', (req, res) => {
-    let id = req.session.userId;
-    let numberOfSigners = 0;
-    return countSigners()
-        .then(({ rows }) => {
-            numberOfSigners = rows[0].numberofsigners;
-            return getSignature(id);
-        }).then( ({ rows }) => {
-            res.render('thanks', {signers: numberOfSigners, signature: rows[0].signature});
-        }).catch(err => {
-            console.error(err);
-        });
+    if(req.session.name) {
+        if(req.session.sign) {
+            let id = req.session.id;
+            let numberOfSigners = 0;
+            return countSigners()
+                .then(({ rows }) => {
+                    numberOfSigners = rows[0].numberofsigners;
+                    return getSignature(id);
+                }).then( ({ rows }) => {
+                    res.render('thanks', {signers: numberOfSigners, signature: rows[0].signature});
+                }).catch(err => {
+                    console.error(err);
+                });
+        } else {
+            res.render('petition');
+        }
+    } else {
+        res.redirect('/signup');
+    }
+
 });
 
 
 // 9
 app.get('/signers', (req, res) => {
-    return listOfSigners()
-        .then( ({ rows }) => {
-            res.render('signers', {signersList: rows});
-        }).catch(err => {
-            console.error(err);
-        });
+    if(req.session.name) {
+        if(req.session.sign) {
+            return listOfSigners()
+                .then( ({ rows }) => {
+                    res.render('signers', {signersList: rows});
+                }).catch(err => {
+                    console.error(err);
+                });
+        } else {
+            res.render('petition');
+        }
+    } else {
+        res.redirect('/signup');
+    }
+
 });
-
-
-
 
 
 app.listen(8080, () => console.log(`I'm listening.`));

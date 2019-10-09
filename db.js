@@ -5,7 +5,7 @@ let db = spicedPg('postgres:postgres:12345@localhost:5432/petition');
 const enterInfo = (signature, userId) => {
     return db.query(
         `INSERT INTO signatures (signature, user_id)
-        VALUES ($1, (SELECT id FROM users WHERE id = $2)) RETURNING id`,
+        VALUES ($1, (SELECT id FROM users WHERE id = $2));`,
         [signature, userId]
     );
 };
@@ -25,21 +25,20 @@ const getSignature = id => {
 
 const listOfSigners = () => {
     return db.query(
-        `SELECT firstname, lastname FROM users JOIN signatures ON users.id = signatures.user_id;`,
-
+        `SELECT firstname, lastname FROM users JOIN signatures ON users.id = signatures.user_id;`
     );
 };
 
 const signUp = (firstname, lastname, emailaddress, password) => {
     return db.query(
-        `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING id;`,
+        `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING firstname, id;`,
         [firstname, lastname, emailaddress, password]
     );
 };
 
 const logIn = (emailaddress) => {
     return db.query(
-        `SELECT password, user_id, signature FROM users LEFT JOIN signatures ON users.id = signatures.user_id WHERE email = $1;`,
+        `SELECT id, firstname, password FROM users WHERE email = $1;`,
         [emailaddress]
     );
 };
