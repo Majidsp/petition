@@ -4,9 +4,8 @@ const hb = require('express-handlebars');
 const cookieSession = require('cookie-session');
 const csurf = require('csurf');
 const helmet = require('helmet');
-const { enterInfo, countSigners, getSignature, listOfSigners, signUp, logIn} = require('./db');
-const { toHash, toCompare } = require('./encode');
-
+const spicedPg = require('spiced-pg');
+let db = spicedPg('postgres:postgres:12345@localhost:5432/petition');
 
 //Middleware for helmet
 app.use(helmet());
@@ -29,7 +28,6 @@ app.use(express.urlencoded({extended: false}));
 
 //Middleware for csurf and securing against iframes
 app.use(csurf());
-
 app.use(function(req, res, next) {
     //iframes
     res.set("x-frame-options", "DENY");
@@ -53,39 +51,7 @@ app.use(
 );
 
 
-
-// let comparing = () => {
-//     toHash('okay').then( result => toCompare('okay', result)
-//     ).then( result => console.log(result)
-//     );
-// };
-//
-// comparing();
-
 //Routes
-app.get('/signup', (req, res) => {
-    res.render('signup');
-});
-
-app.post('/signup', (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
-
-    if(!firstName || !lastName || !email || !password) {
-        res.render('signup', {error: true});
-    } else {
-        toHash(password)
-            .then( result => signUp(firstName, lastName, email, result)
-            ).then( ({ rows }) => {
-                req.session.id = rows[0].email;
-                res.redirect('/logIn');
-            }
-            ).catch(() => res.render('signup', {error: true}));
-    }
-});
-
-
-
-
 // 1
 app.get('/', (req, res) => {
     req.session.id ? res.redirect('thanks') : res.redirect('/petition');
@@ -100,25 +66,30 @@ app.get('/petition', (req, res) => {
 app.get('/thanks', (req, res) => {
     let id = req.session.id;
     let numberOfSigners = 0;
-    return countSigners()
-        .then(({ rows }) => {
-            numberOfSigners = rows[0].numberofsigners;
-            return getSignature(id);
-        }).then( ({ rows }) => {
-            res.render('thanks', {signers: numberOfSigners, signature: rows[0].signature});
-        }).catch(err => {
-            console.error(err);
-        });
+    return db.query(
+        `SELECT COUNT(*) AS NUMBEROFSIGNERS FROM petition;`
+    ).then(({ rows }) => {
+        numberOfSigners = rows[0].numberofsigners;
+        return db.query(
+            `SELECT SIGNATURE FROM petition WHERE id = $1;`,
+            [id]
+        );
+    }).then( ({ rows }) => {
+        res.render('thanks', {signers: numberOfSigners, signature: rows[0].signature});
+    }).catch(err => {
+        console.error(err);
+    });
 });
 
 // 4
 app.get('/signers', (req, res) => {
-    return listOfSigners()
-        .then( ({ rows }) => {
-            res.render('signers', {signersList: rows});
-        }).catch(err => {
-            console.error(err);
-        });
+    return db.query(
+        `SELECT FIRSTNAME, LASTNAME FROM petition;`
+    ).then( ({ rows }) => {
+        res.render('signers', {signersList: rows});
+    }).catch(err => {
+        console.error(err);
+    });
 });
 
 // 5
@@ -129,13 +100,15 @@ app.post('/petition', (req, res) => {
     if(!firstName || !lastName || !signature){
         res.render('petition', {error: true});
     } else {
-        enterInfo(req.body.firstName, req.body.lastName, req.body.signature)
-            .then(({ rows }) => {
-                req.session.id = rows[0].id;
-                res.redirect('/thanks');
-            }).catch(() => {
-                res.render('petition', {error: true});
-            });
+        db.query(
+            `INSERT INTO petition (firstname, lastname, signature) VALUES ($1, $2, $3) RETURNING id`,
+            [req.body.firstName, req.body.lastName, req.body.signature]
+        ).then(({ rows }) => {
+            req.session.id = rows[0].id;
+            res.redirect('/thanks');
+        }).catch(() => {
+            res.render('petition', {error: true});
+        });
     }
 
 });
