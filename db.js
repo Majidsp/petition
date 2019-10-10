@@ -23,9 +23,37 @@ const getSignature = id => {
     );
 };
 
+// const listOfSigners = () => {
+//     return db.query(
+//         `SELECT firstname, lastname FROM users JOIN signatures ON users.id = signatures.user_id;`
+//     );
+// };
+
 const listOfSigners = () => {
     return db.query(
-        `SELECT firstname, lastname FROM users JOIN signatures ON users.id = signatures.user_id;`
+        `SELECT firstname, lastname, age, city, url FROM users
+        JOIN signatures ON users.id = signatures.user_id
+        JOIN user_profiles ON users.id = user_profiles.user_id;`
+    );
+};
+
+const filteredListOfSignersByAge = (value) => {
+    return db.query(
+        `SELECT firstname, lastname, age, city, url FROM users
+        JOIN signatures ON users.id = signatures.user_id
+        JOIN user_profiles ON users.id = user_profiles.user_id
+        WHERE age = $1;`,
+        [value]
+    );
+};
+
+const filteredListOfSignersByCity = (value) => {
+    return db.query(
+        `SELECT firstname, lastname, age, city, url FROM users
+        JOIN signatures ON users.id = signatures.user_id
+        JOIN user_profiles ON users.id = user_profiles.user_id
+        WHERE LOWER(city) = LOWER($1);`,
+        [value]
     );
 };
 
@@ -50,6 +78,13 @@ const checkIfSigned = id => {
     );
 };
 
+const enterProfileInfo = (age, city, homepage, userId) => {
+    return db.query(
+        `INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, (SELECT id FROM users WHERE id = $4))`,
+        [age, city, homepage, userId]
+    );
+};
+
 
 module.exports = {
     enterInfo: enterInfo,
@@ -58,5 +93,8 @@ module.exports = {
     listOfSigners: listOfSigners,
     signUp: signUp,
     logIn: logIn,
-    checkIfSigned: checkIfSigned
+    checkIfSigned: checkIfSigned,
+    enterProfileInfo: enterProfileInfo,
+    filteredListOfSignersByAge: filteredListOfSignersByAge,
+    filteredListOfSignersByCity: filteredListOfSignersByCity
 };

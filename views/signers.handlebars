@@ -2,6 +2,19 @@
     <h2>We the undersigned demand that the barbaric practice of wearing Crocs in public places be banned by all nations.</h2>
     {{> logo}}
     {{#signersList}}
-    <p>{{firstname}} {{lastname}}</p>
+    <p>
+        {{#if url}}
+            <a href="{{url}}">{{firstname}}</a>
+            {{else}}
+            {{firstname}}
+        {{/if}}
+        {{lastname}} {{age}}
+        <!-- {{#if age}}
+            <a href="/signers/{{age}}">{{age}}</a>
+        {{/if}} -->
+        {{#if city}}
+            <a href="/signers/{{city}}">{{city}}</a>
+        {{/if}}
+    </p>
     {{/signersList}}
 </div>

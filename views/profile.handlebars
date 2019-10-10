@@ -1,0 +1,19 @@
+<div class="content">
+    {{> logo}}
+    <h2>Would you like to tell us a little bit more about yourself?</h2>
+
+    {{#if error}}
+        {{> error}}
+    {{/if}}
+    <form action="/profile" method="POST">
+        <input type="text" name="age">
+        <p>Age</p>
+        <input type="text" name="city">
+        <p>City</p>
+        <input type="text" name="homepage">
+        <p>Home page</p>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button id="submitBtn" type="submit">Continue!</button>
+    </form>
+    <p><a href="/login">Skip this!</a></p>
+</div>

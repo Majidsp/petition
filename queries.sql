@@ -4,9 +4,21 @@
 -- DELETE FROM signatures WHERE user_id = 2;
 -- ALTER SEQUENCE users_id_seq RESTART WITH 1;
 --
---
-SELECT * FROM users;
-SELECT id, user_id FROM signatures;
+
+-- SELECT * FROM users;
+-- SELECT id, user_id FROM signatures;
+-- SELECT * FROM user_profiles;
+
+-- SELECT firstname, lastname, age, city, url FROM users
+-- JOIN signatures ON users.id = signatures.user_id
+-- JOIN user_profiles ON users.id = user_profiles.user_id
+-- WHERE city = 'Berlin';
+
+SELECT firstname, lastname, age, city, url FROM users
+JOIN signatures ON users.id = signatures.user_id
+JOIN user_profiles ON users.id = user_profiles.user_id
+WHERE age = 35;
+
 
 -- CREATE TABLE user_profiles(
 --     id SERIAL PRIMARY KEY,
@@ -42,6 +54,8 @@ SELECT id, user_id FROM signatures;
 
 -- SELECT * FROM petition;
 -- SELECT * FROM users;
+-- SELECT * FROM user_profiles;
+
 
 -- SELECT COUNT(*) AS NUMBEROFSIGNERS FROM petition;
 -- SELECT FIRSTNAME, LASTNAME, TIMESTAMP FROM petition;
