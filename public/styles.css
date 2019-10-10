@@ -31,3 +31,8 @@ input {
     color: red;
     font-weight: 700;
 }
+
+.logo {
+    width: 330px;
+    height: 300px;
+}

@@ -1,0 +1,19 @@
+<div class="content">
+    {{> logo}}
+    <h2>Edit your profile.</h2>
+
+    {{#if error}}
+        {{> error}}
+    {{/if}}
+    <form action="/profile/edit" method="POST">
+        FIRST NAME:<input type="text" name="age">
+        LAST NAME:<input type="text" name="age">
+        EMAIL ADDRESS:<input type="text" name="age">
+        PASSWORD:<input type="text" name="age">
+        AGE:<input type="text" name="age">
+        CITY:<input type="text" name="city">
+        HOME PAGE:<input type="text" name="homepage">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button id="submitBtn" type="submit">Update!</button>
+    </form>
+</div>

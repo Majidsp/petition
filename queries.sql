@@ -5,7 +5,7 @@
 -- ALTER SEQUENCE users_id_seq RESTART WITH 1;
 --
 
--- SELECT * FROM users;
+SELECT * FROM users;
 -- SELECT id, user_id FROM signatures;
 -- SELECT * FROM user_profiles;
 
@@ -14,10 +14,10 @@
 -- JOIN user_profiles ON users.id = user_profiles.user_id
 -- WHERE city = 'Berlin';
 
-SELECT firstname, lastname, age, city, url FROM users
-JOIN signatures ON users.id = signatures.user_id
-JOIN user_profiles ON users.id = user_profiles.user_id
-WHERE age = 35;
+-- SELECT firstname, lastname, age, city, url FROM users
+-- JOIN signatures ON users.id = signatures.user_id
+-- JOIN user_profiles ON users.id = user_profiles.user_id
+-- WHERE age = 35;
 
 
 -- CREATE TABLE user_profiles(
