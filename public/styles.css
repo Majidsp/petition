@@ -143,6 +143,11 @@ header {
 }
 
 
+.thanks-header {
+    margin-bottom: 25px;
+}
+
+
 .login-container {
     position: relative;
     top: 100px;
@@ -190,6 +195,8 @@ input {
 
 .signBoxShow {
     background-color: black;
+    width: 500px;
+    margin: 10px auto;
 }
 
 .err {

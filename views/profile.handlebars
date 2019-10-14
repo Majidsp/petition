@@ -9,15 +9,19 @@
     {{#if error}}
         {{> error}}
     {{/if}}
-    <form action="/profile" method="POST">
-        <p>Age</p>
-        <input type="text" name="age">
-        <p>City</p>
-        <input type="text" name="city">
-        <p>Home page</p>
-        <input type="text" name="url">
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <button id="submitBtn" type="submit">Continue!</button>
-    </form>
-    <p><a href="/petition">Skip this!</a></p>
+
+    <div class="login-container">
+        <form action="/profile" method="POST">
+            <p>Age</p>
+            <input type="text" name="age" required autocomplete="off">
+            <p>City</p>
+            <input type="text" name="city" autocomplete="off">
+            <p>Home page</p>
+            <input type="text" name="url" autocomplete="off">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <button id="submitBtn" type="submit">Continue!</button>
+        </form>
+        <p><a href="/petition">Skip this!</a></p>
+    </div>
+
 </div>

@@ -1,24 +1,25 @@
 <div class="content">
+
     {{> logged}}
 
 
-    <h2>Edit your profile.</h2>
 
-    {{#if error}}
-        {{> error}}
-    {{/if}}
-    {{#if exists}}
-        {{> error exists=true}}
-    {{/if}}
-    <form action="/profile/edit" method="POST">
-        FIRST NAME:<input type="text" name="firstname" value="{{firstname}}" autocomplete="off">
-        LAST NAME:<input type="text" name="lastname" value="{{lastname}}" autocomplete="off">
-        EMAIL ADDRESS:<input type="text" name="email" value="{{email}}" autocomplete="off">
-        PASSWORD:<input type="password" name="password" autocomplete="off">
-        AGE:<input type="text" name="age" value="{{age}}" autocomplete="off">
-        CITY:<input type="text" name="city" value="{{city}}" autocomplete="off">
-        HOME PAGE:<input type="text" name="url" value="{{url}}" autocomplete="off">
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <button id="submitBtn" type="submit">Update!</button>
-    </form>
+    <div class="login-container">
+        <h2>Edit your profile.</h2>
+        {{#if error}}
+            {{> error}}
+        {{/if}}
+        <form action="/profile/edit" method="POST">
+            FIRST NAME:<input type="text" name="firstname" value="{{firstname}}" autocomplete="off">
+            LAST NAME:<input type="text" name="lastname" value="{{lastname}}" autocomplete="off">
+            EMAIL ADDRESS:<input type="text" name="email" value="{{email}}" autocomplete="off">
+            PASSWORD:<input type="password" name="password" autocomplete="off">
+            AGE:<input type="text" name="age" value="{{age}}" autocomplete="off">
+            CITY:<input type="text" name="city" value="{{city}}" autocomplete="off">
+            HOME PAGE:<input type="text" name="url" value="{{url}}" autocomplete="off">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <button id="submitBtn" type="submit">Update!</button>
+        </form>
+    </div>
+
 </div>

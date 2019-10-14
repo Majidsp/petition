@@ -1,23 +1,30 @@
 <div class="content">
+
+    {{> logged}}
+
+
     <div class="berlin_container">
         {{> berlin}}
     </div>
 
-    <h2>We the undersigned demand that using public transportation should be free for berliners!.</h2>
-    {{#signersList}}
-    <p>
-        {{#if url}}
-            <a target="_blank" href="http://{{url}}">{{firstname}}</a>
-            {{else}}
-            {{firstname}}
-        {{/if}}
-        {{lastname}} {{age}}
-        <!-- {{#if age}}
-            <a href="/signers/{{age}}">{{age}}</a>
-        {{/if}} -->
-        {{#if city}}
-            <a href="/signers/{{city}}">{{city}}</a>
-        {{/if}}
-    </p>
-    {{/signersList}}
+    <div class="login-container">
+        <h2>We the undersigned demand that using public transportation should be free for berliners!.</h2>
+        {{#signersList}}
+        <p>
+            {{#if url}}
+                <a target="_blank" href="http://{{url}}">{{firstname}}</a>
+                {{else}}
+                {{firstname}}
+            {{/if}}
+            {{lastname}} {{age}}
+            <!-- {{#if age}}
+                <a href="/signers/{{age}}">{{age}}</a>
+            {{/if}} -->
+            {{#if city}}
+                <a href="/signers/{{city}}">{{city}}</a>
+            {{/if}}
+        </p>
+        {{/signersList}}
+    </div>
+
 </div>

@@ -1,6 +1,6 @@
 const requireLoggedInUser = (req, res, next) => {
-    if (!req.session.id && req.url != '/signup' && req.url != '/login') {
-        res.redirect('/signup');
+    if (!req.session.id && req.url != '/signup' && req.url != '/login' && req.url != '/welcome') {
+        res.redirect('/welcome');
     } else {
         next();
     }

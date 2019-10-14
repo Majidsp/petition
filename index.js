@@ -51,7 +51,7 @@ app.get('/signup', (req, res) => {
     res.render('signup');
 });
 
-app.get('/', (req, res) => res.render('welcome'));
+app.get('/welcome', (req, res) => res.render('welcome'));
 
 // 2
 app.post('/signup', (req, res) => {
@@ -85,7 +85,7 @@ app.post('/profile', (req, res) => {
             result.age ? req.session.age = result.age : req.session.age = '';
             result.city ? req.session.city = result.city : req.session.city = '';
             result.url ? req.session.url = result.url : req.session.url = '';
-            res.redirect('/login');
+            res.redirect('/petition');
         })
         .catch(() => res.render('profile', {error: true}));
 });
@@ -188,7 +188,7 @@ app.post('/petition', (req, res) => {
 
 
 // 12
-app.get('/thanks', mw.requireSignature, (req, res) => {
+app.get('/thanks', mw.requireSignature, mw.requireSignature, (req, res) => {
     let id = req.session.id;
     let numberOfSigners = 0;
     return db.countSigners()
@@ -205,14 +205,14 @@ app.get('/thanks', mw.requireSignature, (req, res) => {
 
 
 // 13
-app.get('/signers', mw.requireSignature, (req, res) => {
+app.get('/signers', mw.requireSignature, mw.requireSignature, (req, res) => {
     return db.listOfSigners()
         .then( ({ rows }) => res.render('signers', { signersList: rows}))
         .catch(err => console.error(err));
 });
 
 // 14
-app.get("/signers/:filter", mw.requireSignature, (req, res) => {
+app.get("/signers/:filter", mw.requireSignature,mw.requireSignature, (req, res) => {
     let { filter } = req.params;
     return db.filteredListOfSignersByCity(filter)
         .then( ({ rows }) => res.render('signers', {signersList: rows}))
@@ -220,4 +220,11 @@ app.get("/signers/:filter", mw.requireSignature, (req, res) => {
 });
 
 
-app.listen(process.env.PORT || 9090, () => console.log(`I'm listening.`));
+// 15
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/login");
+});
+
+
+app.listen(process.env.PORT || 8080, () => console.log(`I'm listening.`));
