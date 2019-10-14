@@ -1,13 +1,30 @@
 -- SELECT * FROM petition
--- DELETE FROM users WHERE id = 1;
+-- DELETE FROM users WHERE firstname = 'majid';
 -- ALTER SEQUENCE signatures_id_seq RESTART WITH 1;
 -- DELETE FROM signatures WHERE user_id = 2;
--- ALTER SEQUENCE users_id_seq RESTART WITH 1;
+-- ALTER SEQUENCE user_profiles_id_seq RESTART WITH 1;
 --
 
 SELECT * FROM users;
 -- SELECT id, user_id FROM signatures;
 -- SELECT * FROM user_profiles;
+
+-- DELETE FROM users WHERE firstname = 'majid';
+-- SELECT * FROM user_profiles;
+
+-- DELETE FROM user_profiles WHERE age = 25;
+-- SELECT * FROM user;
+
+-- SELECT firstname, lastname, age, city, url FROM users
+-- JOIN signatures ON users.id = signatures.user_id
+-- LEFT JOIN user_profiles ON users.id = user_profiles.user_id
+
+
+-- INSERT INTO signatures (signature, user_id)
+-- VALUES ('asasdda', (SELECT id FROM users WHERE id = 22));
+
+
+-- INSERT INTO user_profiles (age, city, url, user_id) VALUES (18, 'Berlin', 'ooo.com', (SELECT id FROM users WHERE id = 22))
 
 -- SELECT firstname, lastname, age, city, url FROM users
 -- JOIN signatures ON users.id = signatures.user_id
@@ -19,7 +36,7 @@ SELECT * FROM users;
 -- JOIN user_profiles ON users.id = user_profiles.user_id
 -- WHERE age = 35;
 
-
+--
 -- CREATE TABLE user_profiles(
 --     id SERIAL PRIMARY KEY,
 --     age INT,
@@ -27,6 +44,23 @@ SELECT * FROM users;
 --     url VARCHAR,
 --     user_id INT REFERENCES users(id) NOT NULL UNIQUE
 -- );
+
+-- CREATE TABLE users(
+--     id SERIAL PRIMARY KEY,
+--     age INT,
+--     city VARCHAR,
+--     url VARCHAR,
+--     user_id INT REFERENCES users(id) NOT NULL UNIQUE
+-- );
+-- 
+-- CREATE TABLE users(
+-- id SERIAL PRIMARY KEY,
+-- firstname VARCHAR NOT NULL,
+-- lastname VARCHAR NOT NULL,
+-- email VARCHAR NOT NULL UNIQUE,
+-- password VARCHAR NOT NULL
+-- );
+
 
 -- ALTER TABLE signatures DROP COLUMN lastname;
 --

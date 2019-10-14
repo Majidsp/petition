@@ -1,13 +1,21 @@
 <div class="content">
-    {{> logo}}
-    <h3>Please log in!</h3>
+    <div class="berlin_container">
+        {{> berlin}}
+    </div>
+
     {{#if error}}
-        {{> error}}
+        {{> error }}
     {{/if}}
-    <form action="/login" method="POST">
-        <input type="email" name="email" placeholder="Your email address..." autocomplete="off">
-        <input type="password" name="password" placeholder="Your password..." autocomplete="off">
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <button id="submitBtn" type="submit">Log in</button>
-    </form>
+
+    <div class="login-container">
+        <h2 class="login-header">Please log in!</h2>
+        <form action="/login" method="POST">
+            Email address:<input type="email" name="email" placeholder="Your email address..." autocomplete="off" value="{{setemail}}" required>
+            Password:<input type="password" name="password" placeholder="Your password..." autocomplete="off" required>
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <button id="submitBtn" type="submit">Log in</button>
+        </form>
+    </div>
+
+
 </div>

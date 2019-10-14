@@ -1,13 +1,22 @@
 <div class="content">
-    <h2>Sign our petition to make the wearing of Crocs in public places a criminal act in every jurisdiction!</h2>
-    {{> logo}}
-    {{#if error}}
-        {{> error}}
-    {{/if}}
-    <form action="/petition" method="POST">
-        <input type="text" id="signInput" name="signature">
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <canvas id="canv" width="600" height="200"></canvas>
-        <button id="submitBtn" type="submit">Sign!</button>
-    </form>
+    {{> logged}}
+    <div class="berlin_container">
+        {{> berlin }}
+    </div>
+
+
+    <div class="login-container">
+        {{#if error}}
+            {{> error}}
+        {{/if}}
+        <h2 class="login-header">Sign our petition to make using of public transportation free of charge for berliners!</h2>
+
+        <form action="/petition" method="POST">
+            <input type="text" id="signInput" name="signature">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <canvas id="canv" width="600" height="200"></canvas>
+            <button id="submitBtn" type="submit">Sign!</button>
+        </form>
+    </div>
+
 </div>

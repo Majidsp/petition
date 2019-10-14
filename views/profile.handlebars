@@ -1,19 +1,23 @@
 <div class="content">
-    {{> logo}}
+    {{> logged}}
+
+    <div class="berlin_container">
+        {{> berlin}}
+    </div>
     <h2>Would you like to tell us a little bit more about yourself?</h2>
 
     {{#if error}}
         {{> error}}
     {{/if}}
     <form action="/profile" method="POST">
-        <input type="text" name="age">
         <p>Age</p>
-        <input type="text" name="city">
+        <input type="text" name="age">
         <p>City</p>
-        <input type="text" name="homepage">
+        <input type="text" name="city">
         <p>Home page</p>
+        <input type="text" name="url">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <button id="submitBtn" type="submit">Continue!</button>
     </form>
-    <p><a href="/login">Skip this!</a></p>
+    <p><a href="/petition">Skip this!</a></p>
 </div>

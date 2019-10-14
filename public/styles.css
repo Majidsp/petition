@@ -1,11 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    background-color: yellow;
+    background-color: #ffec05;
+    font-family: 'Anton', sans-serif;
+
 }
 
 .content {
-    max-width: 1000px;
-    margin: auto;
+    position: relative;
+    /* width: 100%; */
+    height: 100vh;
     text-align: center;
+}
+
+.typewriter h1 {
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    display: inline-block;
+    font-size: 3rem;
+    font-family: 'Anton', sans-serif;
+    border-right: .15em solid orange; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 5% auto 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation:
+    typing 4s steps(100, end),
+    blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 1186px }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+}
+
+.typewriter-2 h1 {
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    display: inline-block;
+    width: 0;
+    font-size: 3rem;
+    font-family: 'Anton', sans-serif;
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 5% auto 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation:
+    typing-2 2s steps(40, end),
+    blink-caret-2 .75s step-end infinite;
+    animation-delay: 5s;
+    animation-fill-mode: forwards;
+
+}
+
+@keyframes typing-2 {
+  0% {width: 0}
+  100% {width: 500px}
+}
+
+.join {
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+    color: orange;
+    font-weight: 500;
+    font-size: 1.3rem;
+    font-family: 'Anton', sans-serif;
+    margin-top: 100px;
+    padding: 15px 25px;
+    background-color: black;
+    /* border: 2px solid orange; */
+    border-radius: 10px;
+    z-index: 100;
+
+}
+
+form {
+    text-align: center;
+}
+input {
+    display: block;
+    background-color: #ffec05;
+    border: none;
+    border-bottom: 2px solid black;
+    font-size: 1.3rem;
+    margin: 20px auto !important;
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.signupform_container {
+    position: relative;
+    top: 50px;
+    z-index: 99;
+}
+
+
+button {
+    padding: 10px;
+    background-color: black;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    color: orange;
+    font-family: 'Anton', sans-serif;
+    margin-bottom: 10px;
+}
+
+.berlin_container {
+    z-index: 1;
+}
+
+
+header {
+    position: fixed;
+    background-color: black;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.header_wraper {
+    max-width: 1200px;
+    text-align: right;
+    margin: auto;
+}
+
+.header_wraper, a{
+    text-decoration: none;
+    color: orange;
+    text-decoration: none;
+    padding: 0 5px;
+
+}
+.header_wraper, a:hover{
+    color: #ffec05;
+}
+
+
+.login-container {
+    position: relative;
+    top: 100px;
+    z-index: 95;
+}
+
+.login-header{
+    margin-bottom: 30px;
+}
+
+
+
+.berlin_container {
+    position: absolute;
+    width: 100vw;
+    left: 0;
+    bottom: 0;
+    /* background-color: red; */
+    overflow: hidden;
+}
+
+.berlin {
+    width: 100%;
+    z-index: 2;
+    margin-bottom: -10px;
+}
+
+#submitBtn {
+    margin-top: 10px;
 }
 
 #canv {
@@ -33,6 +199,6 @@ input {
 }
 
 .logo {
-    width: 330px;
-    height: 300px;
+    width: 230px;
+    height: 200px;
 }

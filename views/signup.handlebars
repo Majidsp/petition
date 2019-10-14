@@ -1,16 +1,30 @@
 <div class="content">
-    {{> logo}}
-    <h3>A world without Crocs is within reach but we won't get there without your support.<br>Join our campaign today!</h3>
+    <div class="berlin_container">
+        {{> berlin}}
+    </div>
+
+
+
     {{#if error}}
         {{> error}}
     {{/if}}
-    <form action="/signup" method="POST">
-        <input type="text" name="firstName"  placeholder="Your name..." autocomplete="off">
-        <input type="text" name="lastName" placeholder="Your lastname..." autocomplete="off">
-        <input type="email" name="email" placeholder="Your email address..." autocomplete="off">
-        <input type="password" name="password" placeholder="Your password..." autocomplete="off">
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <button id="submitBtn" type="submit">Sign up</button>
-    </form>
-    <p>If you are already a member, please <a href="/login">log in!</a></p>
+
+    {{#if exists}}
+        {{> error exists=true}}
+    {{/if}}
+    <div class="signupform_container">
+        <form action="/signup" method="POST">
+            Name:<input type="text" name="firstname"  placeholder="Your name..." autocomplete="off">
+            Lastname:<input type="text" name="lastname" placeholder="Your lastname..." autocomplete="off">
+            Email address:<input type="email" name="email" placeholder="Your email address..." autocomplete="off">
+            Password:<input type="password" name="password" placeholder="Your password..." autocomplete="off">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <button id="submitBtn" type="submit">Sign up</button>
+        </form>
+        <p>If you are already a member, please <a href="/login">log in!</a></p>
+
+    </div>
+
+
+
 </div>

@@ -1,10 +1,13 @@
 <div class="content">
-    <h2>We the undersigned demand that the barbaric practice of wearing Crocs in public places be banned by all nations.</h2>
-    {{> logo}}
+    <div class="berlin_container">
+        {{> berlin}}
+    </div>
+
+    <h2>We the undersigned demand that using public transportation should be free for berliners!.</h2>
     {{#signersList}}
     <p>
         {{#if url}}
-            <a href="http://{{url}}">{{firstname}}</a>
+            <a target="_blank" href="http://{{url}}">{{firstname}}</a>
             {{else}}
             {{firstname}}
         {{/if}}
