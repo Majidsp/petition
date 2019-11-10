@@ -181,7 +181,10 @@ app.post('/petition', (req, res) => {
                 req.session.sign = true;
                 res.redirect('/thanks');
             }
-            ).catch(() => res.render('petition', {error: true}));
+            ).catch((err) => {
+                console.log(err);
+                res.render('petition', {error: true});
+            });
     }
 
 });
