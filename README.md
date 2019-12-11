@@ -15,6 +15,8 @@ Cookie Session and CSRF-token
 Jest, SuperTest
 
 # Features:
-registration and login. Users' passwords are encrypted using bcrypt - a password hashing function.
-users can add and edit profile info.
-users can see a full list of supporters or sort fellow-signers by city. If users added their personal webpage, other users can access it by clicking on user's name.
+registration and log in.
+editing profile and adding more information like city of residence and age.
+users can register their real signature using canvas. 
+showing the list of signers and filtering based on location.
+
