@@ -7,12 +7,9 @@ Users can sign up and create a profile in order to sign the petition and support
 # Stack:
 Handlebars.js
 CSS
-Node.js and Express
-AWS S3
-SQL and Postgres
-Node.js and Expres
-Cookie Session and CSRF-token
-Jest, SuperTest
+Node.js
+Express.js
+Postgres
 
 # Features:
 registration and log in.
